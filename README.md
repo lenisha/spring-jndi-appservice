@@ -23,7 +23,9 @@ Copy the Connection String from Azure SQL database
 ![Azure SQL Connection](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/ConnString.PNG "Azure  SQL Server")
 
 Add the Connection String from Azure SQL database to **App Service / Application Settings**   settings
+
 ** DO NOT INCLUDE USERNAME/PASSWORD **
+
 ![Azure SQL Connection](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/ConnectionString.PNG "Azure App Service Settings")
 
 DB connection url for Azure SQL is usually in thins format `jdbc:sqlserver://server.database.windows.net:1433;database=db;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;`
@@ -69,7 +71,7 @@ In this example it's added to `main/webapp/META-INF/context.xml` anc contains th
 ```
 where
 - `factory` overrides default Tomcat `BasicDataSourceFactory` and is MSI aware (included in `msi-mssql-jdbc` library)
-- `url` points to url, in the example above provided by environment variable set by `JAVA_OPTS`
+- `url` points to url, in the example above provided by environment variable set by `JAVA_OPTS=-DSQLDB_URL=jdbc:sqlserver://...'
 
 ## Enable MSI for the JDBC Connection Factory
 
@@ -227,3 +229,50 @@ AI: INFO 25-03-2018 19:31, 1: Configuration file has been successfully found as 
 ``` 
 
 
+##Additional notes on environment indirection
+
+JDBC driver for SQL server `sqljdbc4jar` is installed in Tomcat in Azure App Service by default is old version, need to include most recent version supporting AzureAD in `pom.xml`
+To define JNDI Datsource for Tomact Application, add file `META-INF/context.xml` to the application.
+In this example it's added to `main/webapp/META-INF/context.xml` anc contains the following datasource definition
+
+```
+<Context>
+    <Resource auth="Container"
+	    driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+	    maxActive="8" maxIdle="4"
+	    name="jdbc/tutorialDS" type="javax.sql.DataSource"
+	    url="${SQLAZURE_UsersDB}" />
+
+</Context>
+```
+
+Notice that the URL for the database uses environment variable that should be available and processed by Tomcat startup.
+Unfortunately directly reading App Settings Connection string environment varibale does not work, due to the way Tomcat is started by Azure App Service lifecycle.
+So we will use **indirection** or what was called in C++ world a pointer to a variable.
+
+The way to enforce Tomcat to read environment variables and make them available to application is to define them in `JAVA_OPTS` paramaters during Tomcat startup.
+
+## Define SQL Connection env varible for JAVA_OPTS
+As discussed in [How to set env in Java app in Azure App Service](https://blogs.msdn.microsoft.com/azureossds/2015/10/09/setting-environment-variable-and-accessing-it-in-java-program-on-azure-webapp/)
+To set environment variable that uses another variable definition (not direct value) is to override it in `web.config`
+
+And here are our configuration where we are passing in `JAVA_OPTS` to tomcat  `SQLAZURE_UsersDB`variable in that is used in our DataSource definition above. The value of it relies on the fact that we have set in Application Settings Database Connection string called `UsersDB`, as discussed previously.
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <system.webServer>
+    <handlers>
+      <remove name="httpPlatformHandlerMain" />
+      <add name="httpPlatformHandlerMain" path="*" verb="*" modules="httpPlatformHandler" resourceType="Unspecified"/>
+    </handlers>
+    <httpPlatform processPath="%AZURE_TOMCAT7_HOME%\bin\startup.bat">
+        <environmentVariables>
+            <environmentVariable name="JAVA_OPTS" value="-DSQLAZURE_UsersDB=%SQLAZURECONNSTR_UsersDB%"/>
+        </environmentVariables>
+      </httpPlatform>
+  </system.webServer>
+</configuration>
+```
+
+This file `web.config` should be copied to `D:\home\site\wwwroot` on the AppService to override Tomcat loading.
