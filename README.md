@@ -68,9 +68,27 @@ In this example it's added to `main/webapp/META-INF/context.xml` anc contains th
 </Context>
 ```
 where
-- `msiEnable` flag tells Factory to use MSI identity to establish connection to Datasource
 - `factory` overrides default Tomcat `BasicDataSourceFactory` and is MSI aware (included in `msi-mssql-jdbc` library)
 - `url` points to url, in the example above provided by environment variable set by `JAVA_OPTS`
+
+## Enable MSI for the JDBC Connection Factory
+
+There are currently 3 ways to enable MSI for datasource connection Factory
+
+- Environment variable: `JDBC_MSI_ENABLE=true`, set it in ApplicationSettings for Azure WebApp
+
+- jdbcURL flag: to set it add in jdbc connection string `msiEnable=true`. E.g `jdbc:sqlserver://server.database.windows.net:1433;database=db;msiEnable=true;...`
+
+- `msiEnable` flag in context.xml . E.g
+```
+<Context>
+    <Resource auth="Container"
+	   ....
+		msiEnable="true"
+		factory="com.microsoft.sqlserver.msi.MsiDataSourceFactory" />
+
+</Context>
+```
 
 ## Use SQL Server Hibernate Dialect
 
