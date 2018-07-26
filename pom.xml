@@ -159,6 +159,10 @@
                       <name>JAVA_OPTS</name>
                       <value>-DSQLDB_URL=jdbc:sqlserver://jnditestsrv.database.windows.net:1433;database=jnditestsql;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</value>
                   </property>
+                   <property>
+                       <name>JDBC_MSI_ENABLE</name>
+                       <value>true</value>
+                   </property>
                </appSettings>
 
                 <deploymentType>ftp</deploymentType>
