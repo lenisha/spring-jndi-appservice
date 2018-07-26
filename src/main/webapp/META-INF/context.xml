@@ -1,0 +1,9 @@
+<Context>
+    <Resource auth="Container" 
+	    driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+	    maxActive="8" maxIdle="4" 
+	    name="jdbc/tutorialDS" type="javax.sql.DataSource"
+		url="${SQLDB_URL}"
+	    factory="com.microsoft.sqlserver.msi.MsiDataSourceFactory" />
+
+</Context>

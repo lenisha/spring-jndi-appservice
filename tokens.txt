@@ -1,0 +1,71 @@
+{
+  "aud": "https://database.windows.net/",
+  "iss": "https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/",
+  "iat": 1528734242,
+  "nbf": 1528734242,
+  "exp": 1528763342,
+  "aio": "Y2dgYNjS2GC4u2CPsX9T9QS9HunbAA==",
+  "appid": "72c0bf72-8371-4045-b9b0-73cf5d3d0dfd",
+  "appidacr": "2",
+  "e_exp": 288000,
+  "idp": "https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/",
+  "oid": "82cc5f96-226a-4721-902c-7451cc68fd80",
+  "sub": "82cc5f96-226a-4721-902c-7451cc68fd80",
+  "tid": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+  "uti": "h_QIWHdSHUKsFGchIfIeAA",
+  "ver": "1.0"
+}
+
+{
+  "typ": "JWT",
+  "alg": "RS256",
+  "x5t": "TioGywwlhvdFbXZ813WpPay9AlU",
+  "kid": "TioGywwlhvdFbXZ813WpPay9AlU"
+}
+{
+  "aud": "https://database.windows.net/",
+  "iss": "https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/",
+  "iat": 1531698111,
+  "nbf": 1531698111,
+  "exp": 1531727211,
+  "aio": "42BgYNDV6Xj6tncB81dDy9lBL9ZlAAA=",
+  "appid": "72c0bf72-8371-4045-b9b0-73cf5d3d0dfd",
+  "appidacr": "2",
+  "e_exp": 288000,
+  "idp": "https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/",
+  "oid": "82cc5f96-226a-4721-902c-7451cc68fd80",
+  "sub": "82cc5f96-226a-4721-902c-7451cc68fd80",
+  "tid": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+  "uti": "5xPYZAYfQUi1tgfEE24VAA",
+  "ver": "1.0"
+}
+{
+  "typ": "JWT",
+  "alg": "RS256",
+  "x5t": "TioGywwlhvdFbXZ813WpPay9AlU",
+  "kid": "TioGywwlhvdFbXZ813WpPay9AlU"
+}
+
+{
+  "principalId": "86159263-3702-4483-86b7-e9364e5db965",
+  "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+  "type": "SystemAssigned"
+}
+
+{
+  "aud": "https://database.windows.net/",
+  "iss": "https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/",
+  "iat": 1531702138,
+  "nbf": 1531702138,
+  "exp": 1531731238,
+  "aio": "42BgYOC/5LFZ4onAeoEQK6+tVcJbAQ==",
+  "appid": "0ef8fdb1-c274-4ae3-980e-25d71c5ec4ee",
+  "appidacr": "2",
+  "e_exp": 288000,
+  "idp": "https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/",
+  "oid": "86159263-3702-4483-86b7-e9364e5db965",
+  "sub": "86159263-3702-4483-86b7-e9364e5db965",
+  "tid": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+  "uti": "EASaO7Lqj0yTnjeYq3IWAA",
+  "ver": "1.0"
+}
