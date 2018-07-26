@@ -229,7 +229,7 @@ AI: INFO 25-03-2018 19:31, 1: Configuration file has been successfully found as 
 ``` 
 
 
-##Additional notes on environment indirection
+## Additional notes on environment indirection
 
 JDBC driver for SQL server `sqljdbc4jar` is installed in Tomcat in Azure App Service by default is old version, need to include most recent version supporting AzureAD in `pom.xml`
 To define JNDI Datsource for Tomact Application, add file `META-INF/context.xml` to the application.
@@ -252,7 +252,7 @@ So we will use **indirection** or what was called in C++ world a pointer to a va
 
 The way to enforce Tomcat to read environment variables and make them available to application is to define them in `JAVA_OPTS` paramaters during Tomcat startup.
 
-## Define SQL Connection env varible for JAVA_OPTS
+#### Define SQL Connection env varible for JAVA_OPTS
 As discussed in [How to set env in Java app in Azure App Service](https://blogs.msdn.microsoft.com/azureossds/2015/10/09/setting-environment-variable-and-accessing-it-in-java-program-on-azure-webapp/)
 To set environment variable that uses another variable definition (not direct value) is to override it in `web.config`
 
