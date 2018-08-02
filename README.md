@@ -48,9 +48,9 @@ Example:
 
 ```
 az webapp identity assign --resource-group jnditest --name testjndi
-az ad sp show --id 82cc5f96-226a-4721-902c-7451cc68fd80
+az ad sp show --id 82cc5f96-226a-4721-xxxxx-xxxxxxx
 
-az sql server ad-admin create --resource-group jnditest --server-name jnditestsrv  --display-name admin-msi --object-id 82cc5f96-226a-4721-902c-7451cc68fd80
+az sql server ad-admin create --resource-group jnditest --server-name jnditestsrv  --display-name admin-msi --object-id 82cc5f96-226a-4721-902c-xxxxxx
 ```
 
 # Define DataSource
@@ -109,7 +109,7 @@ Include newer version that supports token based Authentication along with the ap
         <dependency>
             <groupId>com.microsoft.sqlserver.msi</groupId>
             <artifactId>msi-mssql-jdbc</artifactId>
-	        <version>1.0</version>
+	        <version>1.1.0</version>
         </dependency>
 
         <dependency>
@@ -125,14 +125,9 @@ Include newer version that supports token based Authentication along with the ap
         </dependency>
 ```
 
-The `msi-mssql-jdbc` library (is not on Maven central yet) could be downloaded from: [msi-mssql-jdbc release](https://github.com/lenisha/msi-mssql-jdbc/releases/tag/v1.0)
-or built and uploaded to Maven based repo.
+The `msi-mssql-jdbc` library is available on Maven central - sources: [msi-mssql-jdbc release](https://github.com/lenisha/msi-mssql-jdbc/releases/tag/v1.0)
 
-In this example we load it from `lib\msi-mssql-jdbc.jar` into local maven repository using Maven plaugin
 
-```
- mvn clean initialize
-```
 
 see `pom.xml` on how to use `maven-install-plugin
 
