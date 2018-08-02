@@ -125,7 +125,7 @@ Include newer version that supports token based Authentication along with the ap
         </dependency>
 ```
 
-The `msi-mssql-jdbc` library is available on Maven central - sources: [msi-mssql-jdbc release](https://github.com/lenisha/msi-mssql-jdbc/releases/tag/v1.0)
+The `msi-mssql-jdbc` library is available on Maven central - sources: [msi-mssql-jdbc](https://github.com/lenisha/msi-mssql-jdbc/releases/tag/v1.0)
 
 
 
