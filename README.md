@@ -129,7 +129,6 @@ The `msi-mssql-jdbc` library is available on Maven central - sources: [msi-mssql
 
 
 
-see `pom.xml` on how to use `maven-install-plugin
 
 ## To test locally:
 `mvn clean  package`
