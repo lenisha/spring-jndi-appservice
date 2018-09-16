@@ -146,15 +146,17 @@
                <javaVersion>1.7.0_51</javaVersion>
                <javaWebContainer>tomcat 7.0.81</javaWebContainer>
 
+
                <appSettings>
                  <property>
                       <name>JAVA_OPTS</name>
-                      <value>-DSQLDB_URL=jdbc:sqlserver://jnditestsrv.database.windows.net:1433;database=jnditestsql;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</value>
+                      <value>-javaagent:D:\home\site\wwwroot\appinsights\applicationinsights-agent-2.1.2.jar -DSQLDB_URL=jdbc:sqlserver://jnditestsrv.database.windows.net:1433;database=jnditestsql;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</value>
                   </property>
                    <property>
                        <name>JDBC_MSI_ENABLE</name>
                        <value>true</value>
                    </property>
+                    <!-- Add APPLICATION_INSIGHTS_IKEY - Instrumentation key-->
                </appSettings>
 
                 <deploymentType>ftp</deploymentType>
@@ -179,7 +181,15 @@
                             <include>*.ps1</include>
                         </includes>
                     </resource>
-
+                    <resource>
+                        <!-- Where your artifacts are stored -->
+                        <directory>${project.basedir}/appinsights</directory>
+                        <!-- Relative path to /site/wwwroot/ -->
+                        <targetPath>appinsights</targetPath>
+                        <includes>
+                            <include>*</include>
+                        </includes>
+                    </resource>
                 </resources>
             </configuration>
          </plugin>
