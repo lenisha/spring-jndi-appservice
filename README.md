@@ -292,17 +292,17 @@ log4j.logger.com.microsoft=INFO, file, aiAppender
 ### App Insights Views
 After performing these steps following views will be available in App Insights:
 
-** Live Stream **
+__Live Stream__
 ![Live Stream](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-LiveStream.PNG "LS")
 
-** Metrics **
+**Metrics**
 ![Metrics](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-Metrics.png "Metrics")
 
-** Performance **
+**Performance**
 ![Performance](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-Performace.PNG "Performance")
 
-** Logs **
-![Logs](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-Logs.png "Logs")
+**Logs**
+![Logs](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-Logs.PNG "Logs")
 
 
 ### App Insights Agent
@@ -351,12 +351,12 @@ To enable dependency tracking and end to end transaction view include app insigh
 ```
 
 The resulting settings:
-![Azure App Sttings](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AppSettings.PNG "Azure App Service Settings")
+![Azure App Settings](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AppSettings.PNG "Azure App Service Settings")
 
-** Application Map ** - shows App Service usage of SQL and specifically marked `createUser` method
+**Application Map** - shows App Service usage of SQL and specifically marked `createUser` method
 ![Application Map](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-AppMap.PNG "Azure App Map")
 
-** End to End transaction View ** - shows dependencies time distribution
+**End to End transaction View** - shows dependencies time distribution
 ![End to End Transaction](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-EndToEnd.PNG "E2E")
 
 ## Additional notes on environment indirection
