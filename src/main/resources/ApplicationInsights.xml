@@ -24,4 +24,65 @@
         <Add type="com.microsoft.applicationinsights.web.extensibility.initializers.WebUserAgentTelemetryInitializer"/>
 
     </TelemetryInitializers>
+    <PerformanceCounters>
+        <Jmx>
+            <Add objectName="java.lang:type=ClassLoading"
+                 attribute="TotalLoadedClassCount" displayName="Loaded Class Count"/>
+            <Add objectName="java.lang:type=Memory"
+                 attribute="HeapMemoryUsage.used" displayName="Heap Memory Usage-used" type="composite"/>
+
+            <add objectName="java.lang:type=Threading"
+                 attribute="ThreadCount" displayName="Thread Count" />
+
+            <add objectName="java.lang:type=GarbageCollector,name=PS MarkSweep"
+                 attribute="CollectionCount" displayName="GC MarkSweep Count" />
+            <add objectName="java.lang:type=GarbageCollector,name=PS Scavenge"
+                 attribute="CollectionCount" displayName="GC Scavenge Count" />
+
+            <!-- PS Survivor Space -->
+            <Add objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+                 attribute="CollectionUsage.used" displayName="PS Survivor Space - used" type="composite"/>
+
+            <Add objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+                 attribute="CollectionUsage.init" displayName="PS Survivor Space - init" type="composite"/>
+
+            <Add objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+                 attribute="CollectionUsage.committed" displayName="PS Survivor Space - committed" type="composite"/>
+
+            <Add objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+                 attribute="CollectionUsage.max" displayName="PS Survivor Space - max" type="composite"/>
+
+
+            <!-- PS Eden Space -->
+            <Add objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+                 attribute="CollectionUsage.used" displayName="PS Eden Space - used" type="composite"/>
+
+            <Add objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+                 attribute="CollectionUsage.init" displayName="PS Eden Space - init" type="composite"/>
+
+            <Add objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+                 attribute="CollectionUsage.committed" displayName="PS Eden Space - committed" type="composite"/>
+
+            <Add objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+                 attribute="CollectionUsage.max" displayName="PS Eden Space - max" type="composite"/>
+
+
+            <!-- PS Old Gen -->
+            <Add objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+                 attribute="CollectionUsage.used" displayName="PS Old Gen - used" type="composite"/>
+
+            <Add objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+                 attribute="CollectionUsage.init" displayName="PS Old Gen - init" type="composite"/>
+
+            <Add objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+                 attribute="CollectionUsage.committed" displayName="PS Old Gen - committed" type="composite"/>
+
+            <Add objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+                 attribute="CollectionUsage.max" displayName="PS Old Gen - max" type="composite"/>
+
+        </Jmx>
+    </PerformanceCounters>
+
+    <!-- This turns on diagnostic level logging -->
+    <SDKLogger></SDKLogger>
 </ApplicationInsights>

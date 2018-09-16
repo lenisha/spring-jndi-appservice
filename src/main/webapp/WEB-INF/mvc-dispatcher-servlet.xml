@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:jee="http://www.springframework.org/schema/jee"
-    xmlns:tx="http://www.springframework.org/schema/tx"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
     http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
     ">
 
-    <context:component-scan base-package="tutorial"/>
+    <context:component-scan base-package="tutorial, com.microsoft.applicationinsights.web.spring"/>
     <context:annotation-config/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -30,4 +31,16 @@
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
 
+    <!-- This factory method causes ApplicationInsights.xml to get loaded -->
+    <bean name="appinsightTelemetryConfiguration"
+                 class="com.microsoft.applicationinsights.TelemetryConfiguration"
+                 factory-method="getActive">
+    </bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.microsoft.applicationinsights.web.spring.RequestNameHandlerInterceptorAdapter" />
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
