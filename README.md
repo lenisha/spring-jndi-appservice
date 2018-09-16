@@ -223,6 +223,142 @@ AI: INFO 25-03-2018 19:31, 1: Configuration file has been successfully found as 
 ``` 
 
 
+## Azure App Insights
+
+Enable Azure App Insights for monitoring and application log aggregation. The process describe on Azure docs web site:
+[App Insights for Java](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-java-get-started)
+Summary of steps below:
+
+- update `pom.xml` to include library dependencies
+```
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>applicationinsights-web</artifactId>
+    <!-- or applicationinsights-core for bare API -->
+    <version>[2.1,)</version>
+</dependency>
+<dependency>
+    <groupId>com.microsoft.azure</groupId>
+    <artifactId>applicationinsights-logging-log4j1_2</artifactId>
+    <version>[2.1,)</version>
+</dependency>
+```
+
+- Add `ApplicationInsights.xml` to resources folder that contains definition of telemetry filters and JMX Counters
+
+- Add App Insights Filter in `web.xml`
+ ```
+  <filter>
+        <filter-name>ApplicationInsightsWebFilter</filter-name>
+        <filter-class>
+            com.microsoft.applicationinsights.web.internal.WebRequestTrackingFilter
+        </filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ApplicationInsightsWebFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+  ```
+- For Spring MVC interceptors in `mvx-dispatcher-servlet.xml`
+
+```
+   <context:component-scan base-package="tutorial, com.microsoft.applicationinsights.web.spring"/>
+
+   <!-- This factory method causes ApplicationInsights.xml to get loaded -->
+    <bean name="appinsightTelemetryConfiguration"
+                 class="com.microsoft.applicationinsights.TelemetryConfiguration"
+                 factory-method="getActive">
+    </bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.microsoft.applicationinsights.web.spring.RequestNameHandlerInterceptorAdapter" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+```
+
+- Update `log4j.prooperties` to include app insights appender, it would stream all app logs to log analytics
+
+```
+log4j.appender.aiAppender=com.microsoft.applicationinsights.log4j.v1_2.ApplicationInsightsAppender
+
+log4j.logger.tutorial=INFO, file, aiAppender
+log4j.logger.com.microsoft=INFO, file, aiAppender
+```
+
+- Add Instrumentation key in Azure App Service environments variable `APPLICATION_INSIGHTS_IKEY`
+
+### App Insights Views
+After performing these steps following views will be available in App Insights:
+
+** Live Stream **
+![Live Stream](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-LiveStream.PNG "LS")
+
+** Metrics **
+![Metrics](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-Metrics.png "Metrics")
+
+** Performance **
+![Performance](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-Performace.PNG "Performance")
+
+** Logs **
+![Logs](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-Logs.png "Logs")
+
+
+### App Insights Agent
+To enable dependency tracking and end to end transaction view include app insights agent with the java application
+
+- Copy agent jar and Create `AI-Agent.xml` in the same directory that has agent jar (in `/appinsights` directory in this project).
+  This file will enables standard dependencies tracking such as SQL, Redis, HTTP
+- Optional: define Java functions to track (it will measure and include these functions in Application Map)
+  In this project we defined UserController.createUser as a method to track
+```
+ <Class name="tutorial.UsersController">
+            <Method name="createUser"
+                    reportCaughtExceptions="true"
+                    reportExecutionTime="true"
+            />
+ </Class>
+```
+
+- Deploy Agent jar and xml file in the directory in App service /site/wwwroot/appinsights
+  Using plugin in `pom.xml`
+```
+<resource>
+    <!-- Where your artifacts are stored -->
+    <directory>${project.basedir}/appinsights</directory>
+    <!-- Relative path to /site/wwwroot/ -->
+    <targetPath>appinsights</targetPath>
+    <includes>
+        <include>*</include>
+    </includes>
+</resource>
+```
+
+- Include java agent in JVM startup. Set `-javaagent:<path to agent>` in Azure App Service env variable `JAVA_OPTS`
+```
+ <appSettings>
+     <property>
+          <name>JAVA_OPTS</name>
+          <value>-javaagent:D:\home\site\wwwroot\appinsights\applicationinsights-agent-2.1.2.jar -DSQLDB_URL=jdbc:sqlserver://jnditestsrv.database.windows.net:1433;database=jnditestsql;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</value>
+      </property>
+       <property>
+           <name>JDBC_MSI_ENABLE</name>
+           <value>true</value>
+       </property>
+        <!-- Add APPLICATION_INSIGHTS_IKEY - Instrumentation key-->
+ </appSettings>
+```
+
+The resulting settings:
+![Azure App Sttings](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AppSettings.PNG "Azure App Service Settings")
+
+** Application Map ** - shows App Service usage of SQL and specifically marked `createUser` method
+![Application Map](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-AppMap.PNG "Azure App Map")
+
+** End to End transaction View ** - shows dependencies time distribution
+![End to End Transaction](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/AI-EndToEnd.PNG "E2E")
+
 ## Additional notes on environment indirection
 
 JDBC driver for SQL server `sqljdbc4jar` is installed in Tomcat in Azure App Service by default is old version, need to include most recent version supporting AzureAD in `pom.xml`
