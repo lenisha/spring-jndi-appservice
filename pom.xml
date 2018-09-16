@@ -24,12 +24,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>3.0.6.RELEASE</version>
+            <version>3.1.4.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>3.0.6.RELEASE</version>
+            <version>3.1.4.RELEASE</version>
         </dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -97,6 +97,18 @@
             <version>6.4.0.jre7</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>applicationinsights-web</artifactId>
+            <!-- or applicationinsights-core for bare API -->
+            <version>[2.1,)</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>applicationinsights-logging-log4j1_2</artifactId>
+            <version>[2.1,)</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -125,7 +137,7 @@
                 </authentication>
                  <!-- Web App information testjndiapp2 -->
                <resourceGroup>jnditest</resourceGroup>
-               <appName>testjndi</appName>
+               <appName>testjndiai</appName>
                <!-- <region> and <pricingTier> are optional. They will be used to create new Web App if the specified Web App doesn't exist -->
                <region>eastus</region>
                <pricingTier>S1</pricingTier>
@@ -134,15 +146,17 @@
                <javaVersion>1.7.0_51</javaVersion>
                <javaWebContainer>tomcat 7.0.81</javaWebContainer>
 
+
                <appSettings>
                  <property>
                       <name>JAVA_OPTS</name>
-                      <value>-DSQLDB_URL=jdbc:sqlserver://jnditestsrv.database.windows.net:1433;database=jnditestsql;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</value>
+                      <value>-javaagent:D:\home\site\wwwroot\appinsights\applicationinsights-agent-2.1.2.jar -DSQLDB_URL=jdbc:sqlserver://jnditestsrv.database.windows.net:1433;database=jnditestsql;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</value>
                   </property>
                    <property>
                        <name>JDBC_MSI_ENABLE</name>
                        <value>true</value>
                    </property>
+                    <!-- Add APPLICATION_INSIGHTS_IKEY - Instrumentation key-->
                </appSettings>
 
                 <deploymentType>ftp</deploymentType>
@@ -167,7 +181,15 @@
                             <include>*.ps1</include>
                         </includes>
                     </resource>
-
+                    <resource>
+                        <!-- Where your artifacts are stored -->
+                        <directory>${project.basedir}/appinsights</directory>
+                        <!-- Relative path to /site/wwwroot/ -->
+                        <targetPath>appinsights</targetPath>
+                        <includes>
+                            <include>*</include>
+                        </includes>
+                    </resource>
                 </resources>
             </configuration>
          </plugin>

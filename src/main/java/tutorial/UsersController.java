@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- * @author: alexec (alex.e.c@gmail.com)
- */
 @Controller
 public class UsersController {
 
@@ -26,7 +23,9 @@ public class UsersController {
     @RequestMapping("/users")
     public String users(Model model) {
 
-        logger.info("XXX - Retrieveing Users");
+        logger.info("INFO - Retrieveing Users");
+        logger.debug("DEBUG - Retrieveing Users");
+
         model.addAttribute("users", entityManager.createQuery("select u from User u").getResultList());
 
         return "users";
@@ -41,7 +40,9 @@ public class UsersController {
     @Transactional
     public String createUser(Model model, String name) {
 
-        logger.info("XXX - Creating Users");
+        logger.info("INFO - Creating Users");
+        logger.debug("DEBUG - Creating Users");
+
         User user = new User();
         user.setName(name);
 
