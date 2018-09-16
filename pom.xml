@@ -97,6 +97,12 @@
             <version>6.4.0.jre7</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>applicationinsights-web</artifactId>
+            <!-- or applicationinsights-core for bare API -->
+            <version>[2.1,)</version>
+        </dependency>
 
     </dependencies>
 
@@ -125,7 +131,7 @@
                 </authentication>
                  <!-- Web App information testjndiapp2 -->
                <resourceGroup>jnditest</resourceGroup>
-               <appName>testjndi</appName>
+               <appName>testjndiai</appName>
                <!-- <region> and <pricingTier> are optional. They will be used to create new Web App if the specified Web App doesn't exist -->
                <region>eastus</region>
                <pricingTier>S1</pricingTier>
