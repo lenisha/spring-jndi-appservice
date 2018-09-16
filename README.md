@@ -222,6 +222,26 @@ AI: INFO 25-03-2018 19:31, 1: Configuration file has been successfully found as 
 [INFO] Successfully deployed Web App at https://testjavajndi.azurewebsites.net
 ``` 
 
+## Change LOG LEVEL at Runtime
+To be able to change log level at runtime use Log4J version 2 ( docs on the variables https://logging.apache.org/log4j/2.0/manual/lookups.htm )
+
+- In `log4j.properties` set the log level to use variable, e.g
+
+```
+log4j.logger.tutorial=${APP_LOG_LEVEL}, file, aiAppender
+log4j.logger.com.microsoft=${MS_LOG_LEVEL}, file, aiAppender
+```
+
+- Set variable in App service environment settings in `JAVA_OPTS`
+```
+ <appSettings>
+ <property>
+      <name>JAVA_OPTS</name>
+      <value>-DAPP_LOG_LEVEL=INFO -DMS_LOG_LEVEL=ERROR</value>
+  </property>
+ </appSettings>
+```
+- Update Application setting and the new Log Level will take effect in a few seconds
 
 ## Azure App Insights
 
@@ -278,7 +298,7 @@ Summary of steps below:
     </mvc:interceptors>
 ```
 
-- Update `log4j.prooperties` to include app insights appender, it would stream all app logs to log analytics
+- Update `log4j.properties` to include app insights appender, it would stream all app logs to log analytics
 
 ```
 log4j.appender.aiAppender=com.microsoft.applicationinsights.log4j.v1_2.ApplicationInsightsAppender
