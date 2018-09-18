@@ -21,7 +21,6 @@
                     reportExecutionTime="true"
             />
 
-
         </Class>
 
     </Instrumentation>

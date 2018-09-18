@@ -27,9 +27,9 @@
     <PerformanceCounters>
         <Jmx>
             <Add objectName="java.lang:type=ClassLoading"
-                 attribute="TotalLoadedClassCount" displayName="Loaded Class Count"/>
+                 attribute="TotalLoadedClassCount" displayName="Total Loaded Class Count"/>
             <Add objectName="java.lang:type=Memory"
-                 attribute="HeapMemoryUsage.used" displayName="Heap Memory Usage-used" type="composite"/>
+                 attribute="HeapMemoryUsage.used" displayName="Heap Memory Usage-Used" type="composite"/>
 
             <add objectName="java.lang:type=Threading"
                  attribute="ThreadCount" displayName="Thread Count" />
