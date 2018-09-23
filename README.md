@@ -66,31 +66,34 @@ In this example it's added to `main/webapp/META-INF/context.xml` anc contains th
 	    maxActive="8" maxIdle="4"
 	    name="jdbc/tutorialDS" type="javax.sql.DataSource"
 		url="${SQLDB_URL}"
-	    factory="com.microsoft.sqlserver.msi.MsiDataSourceFactory" />
+	   />
 </Context>
 ```
 where
-- `factory` overrides default Tomcat `BasicDataSourceFactory` and is MSI aware (included in `msi-mssql-jdbc` library)
 - `url` points to url, in the example above provided by environment variable set by `JAVA_OPTS=-DSQLDB_URL=jdbc:sqlserver://...'
 
 ## Enable MSI for the JDBC Connection Factory
 
-There are currently 3 ways to enable MSI for datasource connection Factory
+There are currently 2 ways to enable MSI for datasource connection Factory
 
 - Environment variable: `JDBC_MSI_ENABLE=true`, set it in ApplicationSettings for Azure WebApp
 
 - jdbcURL flag: to set it add in jdbc connection string `msiEnable=true`. E.g `jdbc:sqlserver://server.database.windows.net:1433;database=db;msiEnable=true;...`
 
-- `msiEnable` flag in context.xml . E.g
-```
-<Context>
-    <Resource auth="Container"
-	   ....
-		msiEnable="true"
-		factory="com.microsoft.sqlserver.msi.MsiDataSourceFactory" />
+## Enable MSI token refreshing Aspect
+Add aspect bean to beans definitions - `application-context.xml` or `*-dispatcher-servlet.xml` 
 
-</Context>
 ```
+<beans xmlns="http://www.springframework.org/schema/beans"
+    ...
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+    ">
+
+  <aop:aspectj-autoproxy />
+
+   <bean id="msiAspect" class="com.microsoft.sqlserver.msi.MsiTokenAspect"/>
+</beans>
+```    
 
 ## Use SQL Server Hibernate Dialect
 
@@ -103,13 +106,14 @@ in `resources\META-INF\persistence.xml`
 ## Update Application dependencies
 JDBC driver for SQL server `sqljdbc42.jar` installed in Tomcat in Azure App Service by default is older version that does not support token authentication,
 Include newer version that supports token based Authentication along with the app.
+And add libraries for including aspects
 
 ```
 
         <dependency>
             <groupId>com.microsoft.sqlserver.msi</groupId>
             <artifactId>msi-mssql-jdbc</artifactId>
-	        <version>1.1.0</version>
+	        <version>1.1.2</version>
         </dependency>
 
         <dependency>
@@ -123,11 +127,27 @@ Include newer version that supports token based Authentication along with the ap
             <artifactId>mssql-jdbc</artifactId>
             <version>6.4.0.jre7</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.6.11</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.6.11</version>
+        </dependency>
 ```
 
 The `msi-mssql-jdbc` library is available on Maven central - sources: [msi-mssql-jdbc](https://github.com/lenisha/msi-mssql-jdbc/releases/tag/v1.0)
-
-
 
 
 ## To test locally:
