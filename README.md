@@ -113,7 +113,7 @@ And add libraries for including aspects
         <dependency>
             <groupId>com.microsoft.sqlserver.msi</groupId>
             <artifactId>msi-mssql-jdbc</artifactId>
-	        <version>1.1.2</version>
+	        <version>2.0.0</version>
         </dependency>
 
         <dependency>
