@@ -72,7 +72,7 @@ In this example it's added to `main/webapp/META-INF/context.xml` anc contains th
 where
 - `url` points to url, in the example above provided by environment variable set by `JAVA_OPTS=-DSQLDB_URL=jdbc:sqlserver://...'
 
-## Enable MSI for the JDBC Connection Factory
+## Enable MSI 
 
 There are currently 2 ways to enable MSI for datasource connection Factory
 
