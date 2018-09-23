@@ -8,6 +8,9 @@
 	<version>1.0</version>
     <packaging>war</packaging>
 
+    <properties>
+        <org.springframework-version>3.2.18.RELEASE</org.springframework-version>
+    </properties>
 
 	<dependencies>
         <dependency>
@@ -24,13 +27,31 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>3.1.4.RELEASE</version>
+            <version>${org.springframework-version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>3.1.4.RELEASE</version>
+            <version>${org.springframework-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.6.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.6.11</version>
+        </dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
@@ -65,12 +86,7 @@
 			<version>6.0.18</version>
 			<scope>test</scope>
 		</dependency>
-       <!-- https://mvnrepository.com/artifact/log4j/log4j
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency> -->
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -98,7 +114,7 @@
         <dependency>
             <groupId>com.microsoft.sqlserver.msi</groupId>
             <artifactId>msi-mssql-jdbc</artifactId>
-	        <version>1.1.0</version>
+	        <version>1.1.2</version>
         </dependency>
 
         <dependency>
@@ -107,17 +123,6 @@
             <version>6.4.0.jre7</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.microsoft.azure</groupId>
-            <artifactId>applicationinsights-web</artifactId>
-            <!-- or applicationinsights-core for bare API -->
-            <version>[2.1,)</version>
-        </dependency>
-        <dependency>
-            <groupId>com.microsoft.azure</groupId>
-            <artifactId>applicationinsights-logging-log4j2</artifactId>
-            <version>[2.1,)</version>
-        </dependency>
 
 
     </dependencies>
@@ -160,7 +165,7 @@
                <appSettings>
                  <property>
                       <name>JAVA_OPTS</name>
-                      <value>-DAPP_LOG_LEVEL=INFO -DMS_LOG_LEVEL=ERROR -javaagent:D:\home\site\wwwroot\appinsights\applicationinsights-agent-2.1.2.jar -DSQLDB_URL=jdbc:sqlserver://jnditestsrv.database.windows.net:1433;database=jnditestsql;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</value>
+                      <value>-DAPP_LOG_LEVEL=DEBUG -DSQLDB_URL=jdbc:sqlserver://jnditestsrv.database.windows.net:1433;database=jnditestsql;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</value>
                   </property>
                    <property>
                        <name>JDBC_MSI_ENABLE</name>
@@ -189,15 +194,6 @@
                         <includes>
                             <!--<include>web.config</include>-->
                             <include>*.ps1</include>
-                        </includes>
-                    </resource>
-                    <resource>
-                        <!-- Where your artifacts are stored -->
-                        <directory>${project.basedir}/appinsights</directory>
-                        <!-- Relative path to /site/wwwroot/ -->
-                        <targetPath>appinsights</targetPath>
-                        <includes>
-                            <include>*</include>
                         </includes>
                     </resource>
                 </resources>
