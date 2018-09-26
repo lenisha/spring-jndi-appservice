@@ -34,8 +34,5 @@
     </bean>
 
 
-    <aop:aspectj-autoproxy />
-
-    <bean id="msiAspect" class="com.microsoft.sqlserver.msi.MsiTokenAspect"/>
 
 </beans>
