@@ -114,6 +114,13 @@ Include newer version that supports token based Authentication along with the ap
             <artifactId>mssql-jdbc</artifactId>
             <version>6.4.0.jre7</version>
         </dependency>
+        
+        </dependency><dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+
 ```
 
 The `msi-mssql-jdbc` library is available on Maven central - sources: [msi-mssql-jdbc](https://github.com/lenisha/msi-mssql-jdbc/releases/tag/v1.0)
