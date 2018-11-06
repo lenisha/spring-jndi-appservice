@@ -127,6 +127,7 @@ The `msi-mssql-jdbc` library is available on Maven central - sources: [msi-mssql
 
 
 ## To test locally:
+`mvn initialize`
 `mvn clean  package`
 and copy resulting war file from target directory to Tomcat webapps directory
 
