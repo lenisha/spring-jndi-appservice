@@ -97,7 +97,7 @@
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
-            <version>7.1.2-SNAPSHOT</version>
+            <version>7.1.2-SNAPSHOT.jre8-preview</version>
         </dependency>
 
     </dependencies>
@@ -129,9 +129,9 @@
                         <configuration>
                             <groupId>com.microsoft.sqlserver</groupId>
                             <artifactId>mssql-jdbc</artifactId>
-                            <version>7.1.2-SNAPSHOT</version>
+                            <version>7.1.2-SNAPSHOT.jre8-preview</version>
                             <packaging>jar</packaging>
-                            <file>${basedir}/lib/mssql-jdbc-7.1.2-SNAPSHOT.jar</file>
+                            <file>${basedir}/lib/mssql-jdbc-7.1.2-SNAPSHOT.jre8-preview.jar</file>
                         </configuration>
                     </execution>
                 </executions>
@@ -153,7 +153,7 @@
                <pricingTier>S1</pricingTier>
 
                <!-- Java Runtime Stack for Web App on Windows-->
-               <javaVersion>1.7.0_51</javaVersion>
+               <javaVersion>1.8.0_181</javaVersion>
                <javaWebContainer>tomcat 7.0.81</javaWebContainer>
 
 
