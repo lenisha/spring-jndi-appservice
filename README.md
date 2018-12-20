@@ -64,7 +64,7 @@ This solution uses Tomcat JDBC Pool and MSI Interceptor that is refreshing token
 <Context>
     <Resource auth="Container" 
 	    driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-	    maxActive="8" maxIdle="4"
+	    maxActive="8" maxIdle="4" validationQuery="SELECT 1" testOnBorrow="true"
 	    name="jdbc/tutorialDS" type="javax.sql.DataSource"
 		url="${SQLDB_URL}"
         factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
