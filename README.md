@@ -66,9 +66,7 @@ This solution uses Tomcat JDBC Pool and MSI Interceptor that is refreshing token
 	    driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 	    maxActive="8" maxIdle="4" validationQuery="SELECT 1" testOnBorrow="true"
 	    name="jdbc/tutorialDS" type="javax.sql.DataSource"
-		url="${SQLDB_URL}"
-        factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-        jdbcInterceptors="com.microsoft.sqlserver.msi.MsiTokenInterceptor" />
+		url="${SQLDB_URL}" />
 </Context>
 ```
 where
@@ -76,12 +74,11 @@ where
 
 ## Enable MSI 
 
-There are currently 2 ways to enable MSI for datasource connection Factory
+Include flag `authentication=ActiveDirectoryMSI` in  jdbcURL to enable MSI based authentication for the connection:
 
-- Environment variable: `JDBC_MSI_ENABLE=true`, set it in ApplicationSettings for Azure WebApp
-
-- jdbcURL flag: to set it add in jdbc connection string `msiEnable=true`. E.g `jdbc:sqlserver://server.database.windows.net:1433;database=db;msiEnable=true;...`
-
+```
+jdbc:sqlserver://<srv>.database.windows.net:1433;database=<db>;authentication=ActiveDirectoryMSI;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</value>
+``` 
 
 ## Use SQL Server Hibernate Dialect
 
@@ -97,34 +94,13 @@ Include newer version that supports token based Authentication along with the ap
 
 ```
 
-        <dependency>
-            <groupId>com.microsoft.sqlserver.msi</groupId>
-            <artifactId>msi-mssql-jdbc</artifactId>
-	        <version>2.0.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <version>6.4.0.jre7</version>
-        </dependency>
-        
-        </dependency><dependency>
-            <groupId>com.nimbusds</groupId>
-            <artifactId>nimbus-jose-jwt</artifactId>
-            <version>3.1.2</version>
-        </dependency>
+    <dependency>
+        <groupId>com.microsoft.sqlserver</groupId>
+        <artifactId>mssql-jdbc</artifactId>
+        <version>7.2.0.jre8</version>
+     </dependency>
 
 ```
-
-The `msi-mssql-jdbc` library is available on Maven central - sources: [msi-mssql-jdbc](https://github.com/lenisha/msi-mssql-jdbc/releases/tag/v1.0)
-
 
 ## To test locally:
 `mvn initialize`
@@ -136,7 +112,7 @@ Navigate to `localhost:8080/spring-jndi-appservice/create-user.html`
 ## To debug locally
 set env variables
 ```
-set JAVA_OPTS=-DSQLDB_URL=jdbc:sqlserver://server.database.windows.net:1433;database=database;msiEnable=true;encrypt=true;trustServerCerti
+set JAVA_OPTS=-DSQLDB_URL=jdbc:sqlserver://server.database.windows.net:1433;database=database;authentication=ActiveDirectoryMSI;encrypt=true;trustServerCerti
 ficate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
 
 set JPDA_SUSPEND=y
@@ -162,35 +138,49 @@ To test on Azure AppService deploy using Azure deployment options, the simplest 
 - Add plugin definition in pom.xml
 ```
       <plugin>
-            <groupId>com.microsoft.azure</groupId>
-            <artifactId>azure-webapp-maven-plugin</artifactId>
-            <version>0.2.0</version>
-            <configuration>
-                <authentication>
-                    <serverId>azure-auth</serverId>
-                </authentication>
-                 <!-- Web App information -->
-               <resourceGroup>testjavajndi</resourceGroup>
-               <appName>testjavajndi</appName>
-               <!-- <region> and <pricingTier> are optional. They will be used to create new Web App if the specified Web App doesn't exist -->
-               <region>canadacentral</region>
-               <pricingTier>S1</pricingTier>
-               
-               <!-- Java Runtime Stack for Web App on Windows-->
-               <javaVersion>1.7.0_51</javaVersion>
-               <javaWebContainer>tomcat 7.0.50</javaWebContainer>
-               
-               <!-- WAR deployment -->
-              <deploymentType>war</deploymentType>
-
-               <!-- Specify the war file location, optional if the war file location is: ${project.build.directory}/${project.build.finalName}.war -->
-               <warFile>${project.build.directory}/${project.build.finalName}.war </warFile>
-
-               <!-- Specify context path, optional if you want to deploy to ROOT -->
-               <path>/tutorial-hibernate-jpa</path>
-
-            </configuration>
-        </plugin>
+                 <groupId>com.microsoft.azure</groupId>
+                 <artifactId>azure-webapp-maven-plugin</artifactId>
+                 <version>1.3.0</version>
+                 <configuration>
+                     <authentication>
+                         <serverId>azure-auth</serverId>
+                     </authentication>
+                      <!-- Web App information testjndiapp2 -->
+                    <resourceGroup>jnditest</resourceGroup>
+                    <appName>testjndiai</appName>
+                    <!-- <region> and <pricingTier> are optional. They will be used to create new Web App if the specified Web App doesn't exist -->
+                    <region>eastus</region>
+                    <pricingTier>S1</pricingTier>
+     
+                    <!-- Java Runtime Stack for Web App on Windows-->
+                    <javaVersion>1.8.0_181</javaVersion>
+                    <javaWebContainer>tomcat 7.0.81</javaWebContainer>
+                    <stopAppDuringDeployment>true</stopAppDuringDeployment>
+     
+                    <appSettings>
+                      <property>
+                           <name>JAVA_OPTS</name>
+                           <value>-DSQLDB_URL=jdbc:sqlserver://<srv>.database.windows.net:1433;database=<db>;authentication=ActiveDirectoryMSI;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</value>
+                       </property>
+     
+                         <!-- Add APPLICATION_INSIGHTS_IKEY - Instrumentation key-->
+                    </appSettings>
+     
+                     <deploymentType>ftp</deploymentType>
+                     <!-- Resources to be deployed to your Web App -->
+                     <resources>
+                         <resource>
+                             <!-- Where your artifacts are stored -->
+                             <directory>${project.basedir}/target</directory>
+                             <!-- Relative path to /site/wwwroot/ -->
+                             <targetPath>webapps</targetPath>
+                             <includes>
+                                 <include>*.war</include>
+                             </includes>
+                         </resource>
+                     </resources>
+                 </configuration>
+              </plugin>
 	
 ```
 - run `mvn azure-webapp:deploy`
