@@ -26,7 +26,7 @@ Add the Connection String from Azure SQL database to **App Service / Application
 
 ** DO NOT INCLUDE USERNAME/PASSWORD **
 
-![Azure SQL Connection](https://github.com/lenisha/spring-jndi-appservice/raw/master/img/ConnectionString.PNG "Azure App Service Settings")
+![Azure SQL Connection](https://github.com/lenisha/spring-jndi-appservice/blob/msijdbc/img/ConnectionString.PNG "Azure App Service Settings")
 
 DB connection url for Azure SQL is usually in thins format `jdbc:sqlserver://server.database.windows.net:1433;database=db;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;`
 
