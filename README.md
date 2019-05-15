@@ -58,7 +58,7 @@ az sql server ad-admin create --resource-group jnditest --server-name jnditestsr
 
 To define JNDI Datasource for Tomact Application, add file `META-INF/context.xml` to the application.
 In this example it's added to `main/webapp/META-INF/context.xml` anc contains the following datasource definition
-This solution uses Tomcat JDBC Pool and MSI Interceptor that is refreshing token if needed.
+This solution uses default db pool in Tomcat (typically Apache Commons DBCP) and native JDBC driver capability to get and refresh MSI tokens.
 
 ```
 <Context>
@@ -66,7 +66,7 @@ This solution uses Tomcat JDBC Pool and MSI Interceptor that is refreshing token
 	    driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 	    maxActive="8" maxIdle="4" validationQuery="SELECT 1" testOnBorrow="true"
 	    name="jdbc/tutorialDS" type="javax.sql.DataSource"
-		url="${SQLDB_URL}" />
+	    url="${SQLDB_URL}" />
 </Context>
 ```
 where
