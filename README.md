@@ -1,5 +1,7 @@
 # Spring/Hibernate App on Azure AppService (Tomcat) using JNDI to access SQL Server on Azure  
 
+Code for the article posted on dzone: https://dzone.com/articles/migrating-java-applications-to-azure-app-service-p
+
 ## Spring Hibernate JNDI Example
 
 This Spring example is based on tutorial [Hibernate, JPA & Spring MVC - Part 2] (https://www.alexecollins.com/tutorial-hibernate-jpa-spring-mvc-part-2/) by Alex Collins
