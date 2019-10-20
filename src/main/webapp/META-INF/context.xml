@@ -2,7 +2,7 @@
     <Resource
 			auth="Container"
 			driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-			maxActive="8" maxIdle="4" testOnBorrow="true"  testOnConnect="true" validationQuery="SELECT 1"
+			maxActive="8" maxIdle="8" testOnBorrow="true"  testOnConnect="true" validationQuery="SELECT 1"
 			name="jdbc/tutorialDS" type="javax.sql.DataSource"
 			url="${SQLDB_URL}"
 			factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"

@@ -30,7 +30,6 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/cglib/cglib/2.2/cglib-2.2.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/asm/asm/3.1/asm-3.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/com/microsoft/sqlserver/msi/msi-mssql-jdbc/2.0.2/msi-mssql-jdbc-2.0.2.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/tomcat/tomcat-dbcp/7.0.85/tomcat-dbcp-7.0.85.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/tomcat/tomcat-jdbc/7.0.85/tomcat-jdbc-7.0.85.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/tomcat/tomcat-juli/7.0.85/tomcat-juli-7.0.85.jar" enabled="true" runInBatchMode="false"/>
