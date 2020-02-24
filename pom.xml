@@ -96,10 +96,48 @@
         </dependency>
 
 
-        <dependency>
+        <!--<dependency>
             <groupId>com.microsoft.sqlserver.msi</groupId>
             <artifactId>msi-mssql-jdbc</artifactId>
 	        <version>2.0.3</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>7.0.85</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${org.springframework-version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.6.11</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.6.11</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-dbcp</artifactId>
+            <version>7.0.85</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -110,6 +148,7 @@
 
 
 
+    
     </dependencies>
 
 	<build>
@@ -136,10 +175,10 @@
                     <serverId>azure-auth</serverId>
                 </authentication>
                  <!-- Web App information testjndiapp2 -->
-               <resourceGroup>springboot</resourceGroup>
-               <appName>springai</appName>
+               <resourceGroup>msi</resourceGroup>
+               <appName>jndispringapp</appName>
                <!-- <region> and <pricingTier> are optional. They will be used to create new Web App if the specified Web App doesn't exist -->
-               <region>centralus</region>
+               <region>eastus</region>
                <pricingTier>S1</pricingTier>
 
                <!-- Java Runtime Stack for Web App on Windows-->
@@ -150,7 +189,7 @@
                <appSettings>
                  <property>
                       <name>JAVA_OPTS</name>
-                      <value>-DAPP_LOG_LEVEL=DEBUG -DSQLDB_URL=jdbc:sqlserver://jnditestsrv.database.windows.net:1433;database=jnditestsql;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</value>
+                      <value>-DAPP_LOG_LEVEL=DEBUG -DSQLDB_URL=jdbc:sqlserver://testmetoday.database.windows.net:1433;database=testae;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</value>
                   </property>
                    <property>
                        <name>JDBC_MSI_ENABLE</name>

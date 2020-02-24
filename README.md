@@ -155,7 +155,7 @@ To test on Azure AppService deploy using Azure deployment options, the simplest 
   - Upload war file to `d:\home\site\wwwroot\webapps`  
   - Upload web.config file to `d:\home\site\wwwroot`
   - Restart App Service
-  - Navigate to `https://appname.azurewebsites.net/tutorial-hibernate-jpa/create-user.html`
+  - Navigate to `https://appname.azurewebsites.net/spring-jndi-appservice/create-user.html` or `/spring-jndi-appservice/users.html`
 
 ### Maven plugin
 - setup authentication in .m2/settings.xml as described in https://docs.microsoft.com/en-us/java/azure/spring-framework/deploy-spring-boot-java-app-with-maven-plugin
